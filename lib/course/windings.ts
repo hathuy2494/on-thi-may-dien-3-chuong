@@ -1,41 +1,13 @@
 import type { Chapter } from "./types";
 import { windingQuestions } from "./windings-bank";
+import { windingTheory } from "./theory-diagrams";
 
 export const windings: Chapter = {
   id: 2,
   title: "Những vấn đề chung về máy điện quay",
   shortTitle: "Máy điện quay",
   description: "Biến đổi điện cơ, bố trí dây quấn xoay chiều, sức điện động và từ trường quay.",
-  theory: [
-    {
-      title: "Biến đổi năng lượng điện cơ",
-      points: [
-        "Phần tĩnh gọi là stato, phần quay gọi là rôto. Từ trường qua khe hở liên kết hai phần và cho phép trao đổi công suất điện – cơ.",
-        "Ở chế độ động cơ, lực điện từ trên các thanh dẫn tạo mômen trên trục. Ở chế độ máy phát, chuyển động tương đối giữa dây dẫn với từ trường tạo sức điện động cảm ứng.",
-      ],
-    },
-    {
-      title: "Cực từ, rãnh và bước dây quấn",
-      points: [
-        "Một đôi cực ứng với 360° điện. Bước cực ứng với 180° điện và bằng số rãnh chia cho số cực. Cuộn đủ bước có hai cạnh cách nhau một bước cực.",
-        "Với dây quấn ba pha đều, q là số rãnh trên một cực của một pha. Dây quấn hai lớp có hai cạnh bối dây ở mỗi rãnh, thường thuộc hai bối khác nhau.",
-      ],
-    },
-    {
-      title: "Sức điện động của dây quấn",
-      points: [
-        "Sức điện động các cạnh bối trong những rãnh khác nhau lệch pha theo góc điện giữa rãnh. Cộng theo phasor mới ra sức điện động pha.",
-        "Hệ số dây quấn bằng tích hệ số bước và hệ số phân bố. Bước ngắn và dây quấn phân bố có thể làm giảm sóng hài, đồng thời làm giảm một phần sức điện động cơ bản.",
-      ],
-    },
-    {
-      title: "Sức từ động và từ trường quay",
-      points: [
-        "Sức từ động cơ bản của dây quấn một pha là sóng đập mạch. Nó tách được thành hai sóng quay trái chiều với cùng tốc độ và mỗi biên độ bằng một nửa.",
-        "Ba dây quấn lệch nhau 120° điện trong không gian, mang ba dòng cân bằng lệch nhau 120° theo thời gian, tạo sóng cơ bản quay có biên độ không đổi. Đổi chỗ hai dây pha làm đảo chiều quay.",
-      ],
-    },
-  ],
+  theory: windingTheory,
   formulas: [
     {
       title: "Cảm ứng và lực điện từ",
@@ -72,11 +44,6 @@ export const windings: Chapter = {
         { name: "Sức từ động tổng ba pha", equation: "F₁ₘ = 3F_pha,ₘ/2", note: "Sóng cơ bản với hệ ba pha cân bằng, trong đó F_pha,ₘ là biên độ đập mạch cực đại của một pha." },
       ],
     },
-  ],
-  reminders: [
-    "Ghi rõ đề cho số cực 2p hay số đôi cực p.",
-    "Khi tính hệ số dây quấn, dùng góc điện và kiểm tra máy tính đang ở chế độ độ.",
-    "Phân biệt sức điện động E (V) với sức từ động F (A·vòng).",
   ],
   reference: {
     title: "MIT OpenCourseWare · Dây quấn và hệ số dây quấn",

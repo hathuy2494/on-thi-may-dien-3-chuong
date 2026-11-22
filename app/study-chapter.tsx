@@ -1,7 +1,7 @@
 "use client";
 
-import { BookOpen, ClipboardList, Lightbulb, Sigma } from "lucide-react";
-import type { Chapter, Option, Question } from "@/lib/course/types";
+import { BookOpen, ClipboardList, Sigma } from "lucide-react";
+import type { Chapter, Option, Question, TheoryDiagram } from "@/lib/course/types";
 import { chapterProgress, type Progress } from "@/lib/progress";
 import { ChapterQuiz } from "./study-quiz";
 import { ChapterIcon, chapterLink, ProgressBar, type ChapterSection } from "./study-ui";
@@ -49,18 +49,10 @@ export function ChapterScreen({ chapter, section, progress, ready, record }: {
         <section aria-labelledby="theory-title" className="chapter-content">
           <div className="section-heading"><h2 id="theory-title">Tóm tắt lý thuyết</h2></div>
           <div className="theory-grid">
-            {chapter.theory.map((item) => (
-              <article key={item.title} className="theory-card">
-                <h3>{item.title}</h3>
-                <ul>{item.points.map((point) => <li key={point}>{point}</li>)}</ul>
-              </article>
+            {chapter.theory.map((diagram, index) => (
+              <DiagramCard key={diagram.image} diagram={diagram} eager={index === 0} />
             ))}
           </div>
-          <aside className="reminders">
-            <span className="stat-icon tone-3"><Lightbulb aria-hidden="true" /></span>
-            <div><h3>Chú ý khi làm bài</h3>
-              <ul>{chapter.reminders.map((note) => <li key={note}>{note}</li>)}</ul></div>
-          </aside>
           <ChapterEnd chapter={chapter} next="cong-thuc" label="Xem công thức" />
         </section>
       )}
@@ -88,6 +80,31 @@ export function ChapterScreen({ chapter, section, progress, ready, record }: {
         <ChapterQuiz key={chapter.id} chapter={chapter} progress={progress} record={record} /> :
         <p className="loading" role="status">Đang tải tiến độ…</p>)}
     </>
+  );
+}
+
+function DiagramCard({ diagram, eager }: { diagram: TheoryDiagram; eager: boolean }) {
+  return (
+    <article className="theory-card">
+      <h3>{diagram.title}</h3>
+      <figure className="theory-figure">
+        <a className="theory-art" href={`/ly-thuyet/${diagram.image}.webp`} target="_blank" rel="noreferrer"
+          aria-label={`Mở hình lớn – ${diagram.title}`}>
+          <img src={`/ly-thuyet/${diagram.image}.webp`} alt={diagram.alt} width={1280} height={768}
+            loading={eager ? "eager" : "lazy"} decoding="async" />
+        </a>
+        <figcaption>
+          <ol className="theory-notes">
+            {diagram.notes.map((note, index) => (
+              <li key={note.title}>
+                <span className="theory-note-number" aria-hidden="true">{index + 1}</span>
+                <div><strong>{note.title}</strong><p>{note.text}</p></div>
+              </li>
+            ))}
+          </ol>
+        </figcaption>
+      </figure>
+    </article>
   );
 }
 

@@ -1,48 +1,13 @@
 import type { Chapter } from "./types";
 import { transformerQuestions } from "./transformers-bank";
+import { transformerTheory } from "./theory-diagrams";
 
 export const transformers: Chapter = {
   id: 1,
   title: "Máy biến áp",
   shortTitle: "Máy biến áp",
   description: "Tỉ số biến áp, mạch tương đương, tổn hao, hiệu suất và tổ nối dây ba pha.",
-  theory: [
-    {
-      title: "Cấu tạo và nguyên lý",
-      points: [
-        "Máy biến áp truyền năng lượng giữa các dây quấn qua từ thông biến thiên. Điện áp và dòng điện có thể đổi, còn tần số hai phía bằng nhau.",
-        "Trụ mang dây quấn, gông nối các trụ để khép kín mạch từ. Lõi thép kỹ thuật điện ghép lá cách điện làm giảm dòng điện xoáy. Trong máy kiểu trụ, hai cuộn cùng pha thường được lồng đồng tâm trên cùng một trụ.",
-      ],
-    },
-    {
-      title: "Quan hệ điện từ và quy đổi",
-      points: [
-        "Từ thông chính móc vòng qua cả hai dây quấn. Từ thông tản chủ yếu móc vòng với dây quấn sinh ra nó và được mô hình hóa bằng điện kháng tản.",
-        "Mạch tương đương có các điện trở dây quấn, điện kháng tản và nhánh từ hóa song song. Quy đổi thứ cấp về sơ cấp nhân điện áp với k, chia dòng cho k, nhân tổng trở với k².",
-      ],
-    },
-    {
-      title: "Thí nghiệm không tải và ngắn mạch",
-      points: [
-        "Không tải: hở mạch thứ cấp, cấp điện áp định mức vào phía đo. Dòng I₀ nhỏ, công suất P₀ gần bằng tổn hao sắt.",
-        "Ngắn mạch: nối tắt một dây quấn và cấp điện áp thấp vào dây quấn còn lại đến dòng định mức. Từ thông chính nhỏ, công suất Pₙ gần bằng tổn hao đồng ở định mức.",
-      ],
-    },
-    {
-      title: "Có tải, điện áp và hiệu suất",
-      points: [
-        "Khi có tải, sơ cấp lấy thêm dòng để cân bằng sức từ động của thứ cấp. Tải cảm thường làm điện áp thứ cấp giảm. Tải dung có thể làm điện áp tăng.",
-        "Ở điện áp và tần số gần định mức, tổn hao không tải gần như cố định còn tổn hao đồng tăng theo bình phương hệ số tải. Khi hệ số công suất cố định, hiệu suất cực đại tại điểm hai tổn hao xấp xỉ bằng nhau.",
-      ],
-    },
-    {
-      title: "Máy biến áp ba pha và vận hành song song",
-      points: [
-        "Nối sao có điện áp dây bằng √3 lần điện áp pha. Nối tam giác có dòng dây bằng √3 lần dòng pha. Tỉ số vòng dây luôn áp dụng cho từng pha.",
-        "Tổ nối dây dùng ký hiệu kiểu nối và số giờ để mô tả độ lệch pha giữa hai phía. Vận hành song song cần đúng thứ tự pha, tương thích góc lệch, gần bằng tỉ số điện áp và điện áp ngắn mạch tương đối.",
-      ],
-    },
-  ],
+  theory: transformerTheory,
   formulas: [
     {
       title: "Cảm ứng và định mức",
@@ -74,11 +39,6 @@ export const transformers: Chapter = {
         { name: "Chia tải giữa các máy song song", equation: "Sᵢ ≈ S_tổng · (S_đm,ᵢ/uₙᵢ%) / Σ(S_đm,ⱼ/uₙⱼ%)\nβᵢuₙᵢ% ≈ C", note: "Cùng tỉ số và tổ nối dây, góc tổng trở gần nhau. Với cùng giới hạn β, máy có uₙ% thấp nhất đạt giới hạn trước." },
       ],
     },
-  ],
-  reminders: [
-    "Không tải nghĩa là I₂ = 0, trong khi I₁ = I₀ vẫn khác 0.",
-    "Phân biệt điện áp dây và điện áp pha trước khi dùng tỉ số vòng dây.",
-    "Trong công thức hiệu suất, nhân Pₙ với β² và giữ P₀ gần như không đổi.",
   ],
   reference: {
     title: "IIT Kharagpur · Thử nghiệm và hiệu suất máy biến áp",

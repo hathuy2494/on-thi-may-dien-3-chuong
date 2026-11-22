@@ -1,48 +1,13 @@
 import type { Chapter } from "./types";
 import { inductionQuestions } from "./induction-bank";
+import { inductionTheory } from "./theory-diagrams";
 
 export const induction: Chapter = {
   id: 3,
   title: "Máy điện không đồng bộ",
   shortTitle: "Máy không đồng bộ",
   description: "Độ trượt, mạch tương đương, mômen, mở máy, điều tốc và động cơ một pha.",
-  theory: [
-    {
-      title: "Cấu tạo và nguyên lý cảm ứng",
-      points: [
-        "Dòng ba pha trong stato tạo từ trường quay. Chuyển động tương đối với rôto gây sức điện động và dòng rôto, từ đó sinh mômen điện từ.",
-        "Rôto lồng sóc có thanh dẫn được nối ngắn mạch bằng hai vòng ở hai đầu. Rôto dây quấn có thể nối điện trở phụ vào mạch qua vành trượt.",
-      ],
-    },
-    {
-      title: "Độ trượt và mạch tương đương",
-      points: [
-        "Khi mở máy, n = 0 nên s = 1. Ở chế độ động cơ thuận, 0 < s < 1. Ở tốc độ đồng bộ, s = 0 nên sức điện động cảm ứng rôto do sóng cơ bản bằng 0.",
-        "Sau khi quy đổi về stato, nhánh rôto có phần tử R₂′/s. Tách R₂′ cho tổn hao đồng rôto và R₂′(1 − s)/s cho công suất biến đổi cơ trong chế độ động cơ.",
-      ],
-    },
-    {
-      title: "Dòng công suất và đặc tính cơ",
-      points: [
-        "Công suất điện qua khe hở chia thành tổn hao đồng rôto và công suất cơ phát triển. Trừ ma sát, thông gió và tổn hao cơ phụ theo giả thiết bài toán để ra công suất trục.",
-        "Ở vùng làm việc gần tốc độ đồng bộ, tải tăng thì tốc độ giảm nhẹ và trượt tăng. Mômen cực đại phân cách vùng làm việc bình thường với vùng trượt lớn.",
-      ],
-    },
-    {
-      title: "Mở máy và điều chỉnh tốc độ",
-      points: [
-        "Đấu sao–tam giác giảm dòng mở máy và mômen mở máy còn xấp xỉ một phần ba so với mở máy trực tiếp ở tam giác cùng điện áp dây. Phương pháp này dùng cho máy định chạy tam giác tại điện áp lưới.",
-        "Điều tốc bằng biến tần thay đổi tốc độ từ trường. Dưới tần số cơ sở, giữ tỉ số U/f gần như không đổi để giữ từ thông gần định mức. Đổi số cực cũng làm đổi tốc độ đồng bộ.",
-      ],
-    },
-    {
-      title: "Động cơ không đồng bộ một pha",
-      points: [
-        "Từ trường đập mạch tách thành hai trường quay ngược chiều. Khi rôto đứng yên, mômen của hai thành phần cân bằng nên dây quấn chính một mình không tạo mômen khởi động.",
-        "Dây quấn phụ và tụ có thể tạo dòng lệch pha với dòng dây quấn chính để tạo mômen bắt đầu quay.",
-      ],
-    },
-  ],
+  theory: inductionTheory,
   formulas: [
     {
       title: "Tốc độ và trượt",
@@ -74,11 +39,6 @@ export const induction: Chapter = {
         { name: "Điều khiển dưới tần số cơ sở", equation: "Φ ≈ k · U/f", note: "Bỏ qua sụt áp stato. Ở tần số rất thấp có thể cần bù sụt áp để giữ từ thông." },
       ],
     },
-  ],
-  reminders: [
-    "Trong cân bằng công suất, s nhân với công suất qua khe hở P_δ, không nhân với công suất vào.",
-    "Đổi tốc độ sang rad/s nếu tính mômen từ công suất W.",
-    "Phân biệt dòng dây với dòng pha khi so sánh mở máy sao và tam giác.",
   ],
   reference: {
     title: "MIT OpenCourseWare · Mạch và đặc tính máy không đồng bộ",

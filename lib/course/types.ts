@@ -1,6 +1,13 @@
 export type ChapterId = 1 | 2 | 3;
 export type Option = 0 | 1 | 2 | 3;
 
+export type TheoryDiagram = {
+  title: string;
+  image: string;
+  alt: string;
+  notes: readonly { title: string; text: string }[];
+};
+
 export type Question = {
   id: string;
   topic: string;
@@ -17,12 +24,11 @@ export type Chapter = {
   title: string;
   shortTitle: string;
   description: string;
-  theory: { title: string; points: string[] }[];
+  theory: readonly TheoryDiagram[];
   formulas: {
     title: string;
     items: { name: string; equation: string; note: string }[];
   }[];
-  reminders: string[];
   questions: Question[];
   reference: { title: string; url: string };
 };
