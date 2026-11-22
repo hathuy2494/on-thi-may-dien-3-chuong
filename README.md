@@ -1,10 +1,12 @@
-# Ôn tập Máy điện
+# Ôn thi kỹ thuật
 
-Website ôn tập ba chương đầu của học phần **Máy điện 1 (EE3140)**. Mỗi chương có tóm tắt lý thuyết, bảng công thức và câu hỏi trắc nghiệm kèm lời giải từng bước.
+Website ôn tập hai học phần **Máy điện 1 (EE3140)** và **Kỹ thuật đo lường (EE3110)**.
 
 **[Mở website ôn tập](https://on-thi-may-dien-3-chuong.tartfloat4.chatgpt.site/)**
 
-## Nội dung học
+## Máy điện 1
+
+Ba chương đầu có lý thuyết minh họa, bảng công thức và câu hỏi trắc nghiệm kèm lời giải từng bước.
 
 | Chương | Số câu |
 | --- | ---: |
@@ -16,6 +18,12 @@ Website ôn tập ba chương đầu của học phần **Máy điện 1 (EE3140
 - Chọn A, B, C hoặc D để xem ngay đáp án đúng và lời giải. Nguồn đề được ghi dưới từng câu.
 - Tiến độ ở chế độ khách được lưu trong trình duyệt. Đăng nhập bằng ChatGPT để đồng bộ tiến độ giữa các thiết bị.
 - Mục **Ôn câu sai** cho biết số lần sai, hỗ trợ làm lại và giữ lịch sử sau khi bạn trả lời đúng.
+
+## Kỹ thuật đo lường
+
+- Bốn phần bao gồm cơ sở đo lường, phần tử thiết bị đo, đo đại lượng điện và đo đại lượng không điện.
+- Mỗi dạng có sơ đồ chú thích, công thức và bài tập tự luận có lời giải từng bước.
+- [Luyện đề](https://on-thi-may-dien-3-chuong.tartfloat4.chatgpt.site/#ky-thuat-do-luong/luyen-de) chọn một câu biến thể từ mỗi phần. Ý a hỏi lý thuyết, ý b yêu cầu tính toán. Đáp án hiển thị ngay dưới đề.
 
 ## Chạy trên máy
 
