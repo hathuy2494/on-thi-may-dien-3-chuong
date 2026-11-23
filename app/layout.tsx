@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./study.css";
 import "./measurement.css";
+import "./past-machine-exams.css";
 
 export const metadata: Metadata = {
   title: "Ôn thi kỹ thuật · Máy điện & Kỹ thuật đo lường",

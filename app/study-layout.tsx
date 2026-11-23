@@ -19,9 +19,12 @@ type MeasurementTab = "ly-thuyet" | "cong-thuc" | "bai-tap";
 type View =
   | { kind: "library" | "home" | "mistakes" | "measurement" | "measurement-exam" }
   | { kind: "chapter"; id: ChapterId; section: ChapterSection }
+  | { kind: "machine-exam"; code?: string }
   | { kind: "measurement-topic"; id: string; tab: MeasurementTab };
 
 const MeasurementCourse = lazy(() => import("./measurement-course"));
+const PastMachineExams = lazy(() => import("./past-machine-exams"));
+const machineExamsLink = "#may-dien/luyen-de";
 type StudyProps = {
   account: Account | null;
   initial: Progress;
@@ -31,6 +34,8 @@ type StudyProps = {
 };
 
 function readView(hash: string): View {
+  const machineExam = /^#may-dien\/luyen-de(?:\/([0-9]+))?$/.exec(hash);
+  if (machineExam) return { kind: "machine-exam", code: machineExam[1] };
   if (hash === "#ky-thuat-do-luong/luyen-de") return { kind: "measurement-exam" };
   const topic = /^#ky-thuat-do-luong\/dang\/([a-z0-9-]+)(?:\/(cong-thuc|bai-tap))?$/.exec(hash);
   if (topic) return { kind: "measurement-topic", id: topic[1], tab: (topic[2] || "ly-thuyet") as MeasurementTab };
@@ -69,11 +74,12 @@ export function StudyLayout({ account, initial, readError, signIn, signOut }: St
 
   const currentChapter = view.kind === "chapter" ? chapterById[view.id] : null;
   const inMeasurement = view.kind === "measurement" || view.kind === "measurement-topic" || view.kind === "measurement-exam";
-  const inMachines = view.kind === "home" || view.kind === "chapter" || view.kind === "mistakes";
+  const inMachineChapters = view.kind === "home" || view.kind === "chapter" || view.kind === "mistakes";
+  const inMachines = inMachineChapters || view.kind === "machine-exam";
   const pageName = currentChapter ? `Chương ${currentChapter.id}`
     : view.kind === "mistakes" ? "Ôn câu sai"
     : view.kind === "measurement-topic" ? "Ôn theo dạng"
-    : view.kind === "measurement-exam" ? "Luyện đề"
+    : view.kind === "measurement-exam" || view.kind === "machine-exam" ? "Luyện đề"
     : "Tổng quan";
 
   const navigation = (
@@ -102,6 +108,10 @@ export function StudyLayout({ account, initial, readError, signIn, signOut }: St
             <span>{chapter.shortTitle}</span>
           </a>
         ))}
+        <a href={machineExamsLink} className={`nav-link ${view.kind === "machine-exam" ? "selected" : ""}`}
+          aria-current={view.kind === "machine-exam" ? "page" : undefined}>
+          <ClipboardList aria-hidden="true" /> Luyện đề
+        </a>
         <a href="#cau-sai" className={`nav-link ${view.kind === "mistakes" ? "selected" : ""}`}
           aria-current={view.kind === "mistakes" ? "page" : undefined}>
           <RotateCcw aria-hidden="true" /> Ôn câu sai
@@ -130,7 +140,7 @@ export function StudyLayout({ account, initial, readError, signIn, signOut }: St
       <aside className="sidebar">
         <Brand />
         {navigation}
-        {inMachines && <div className="sidebar-bottom">
+        {inMachineChapters && <div className="sidebar-bottom">
           <div className="sidebar-icon">{account ? <Cloud aria-hidden="true" /> : <BookOpen aria-hidden="true" />}</div>
           <p className="sidebar-note-title">{account ? "Tiến độ của bạn" : "Lưu tiến độ học"}</p>
           <p>{account ? "Tiếp tục ôn tập trên thiết bị khác bằng cùng tài khoản." : "Đăng nhập để xem lại tiến độ và lịch sử câu sai trên các thiết bị."}</p>
@@ -175,7 +185,7 @@ export function StudyLayout({ account, initial, readError, signIn, signOut }: St
         </header>
 
         <main id="noi-dung" className="main" tabIndex={-1}>
-          {inMachines && account && (status === "error" || status === "expired") && (
+          {inMachineChapters && account && (status === "error" || status === "expired") && (
             <div className="sync-warning" role="status">
               <CloudOff aria-hidden="true" />
               <span>{status === "expired" ? "Phiên đăng nhập đã hết hạn." : "Tiến độ chưa đồng bộ."}</span>
@@ -189,6 +199,11 @@ export function StudyLayout({ account, initial, readError, signIn, signOut }: St
             <ChapterScreen chapter={currentChapter} section={view.section} progress={progress} ready={ready} record={record} />
           )}
           {view.kind === "mistakes" && <MistakesScreen progress={progress} ready={ready} record={record} />}
+          {view.kind === "machine-exam" && (
+            <Suspense fallback={<p className="load-measurement" role="status">Đang mở đề Máy điện…</p>}>
+              <PastMachineExams code={view.code} />
+            </Suspense>
+          )}
           {inMeasurement && (
             <Suspense fallback={<p className="load-measurement" role="status">Đang mở Kỹ thuật đo lường…</p>}>
               <MeasurementCourse exam={view.kind === "measurement-exam"}
@@ -198,7 +213,7 @@ export function StudyLayout({ account, initial, readError, signIn, signOut }: St
           )}
           <footer className="footer">
             <span>Ôn thi kỹ thuật</span>
-            {inMachines && (account ? (
+            {inMachineChapters && (account ? (
               <span className="footer-status" aria-live="polite">
                 {status === "saved" && <><Check aria-hidden="true" /> Đã đồng bộ</>}
                 {status === "saving" && <><Cloud aria-hidden="true" /> Đang đồng bộ</>}
@@ -300,6 +315,13 @@ function Overview({ progress, summary }: {
         <div className="chapter-grid">
           {chapters.map((chapter) => <ChapterCard key={chapter.id} chapter={chapter} progress={progress} />)}
         </div>
+      </section>
+
+      <section className="review-banner" aria-labelledby="machine-exams-banner-title">
+        <span className="stat-icon tone-2"><ClipboardList aria-hidden="true" /></span>
+        <div><h2 id="machine-exams-banner-title">Luyện đề Máy điện</h2>
+          <p>Làm đề giữa kỳ theo thứ tự gốc và xem lời giải từng câu.</p></div>
+        <a href={machineExamsLink} className="button button-outline">Mở danh sách đề</a>
       </section>
 
       <section className="review-banner" aria-labelledby="review-banner-title">
